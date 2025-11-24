@@ -1,0 +1,24 @@
+{
+  "name": "sickle_cell_hydration_tracker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/N1gel7/Sickle_cell_hydration_tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/N1gel7/Sickle_cell_hydration_tracker/issues"
+  },
+  "homepage": "https://github.com/N1gel7/Sickle_cell_hydration_tracker#readme",
+  "description": "",
+  "dependencies": {
+    "better-sqlite3": "^12.4.6",
+    "express": "^5.1.0"
+  }
+}
