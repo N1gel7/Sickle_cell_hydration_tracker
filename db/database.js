@@ -13,7 +13,7 @@ export const initDatabase = () =>{
        id INTEGER PRIMARY KEY AUTOINCREMENT,
        amount_litres REAL NOT NULL,
        timestamp TEXT NOT NULL,
-       drink_type TEXT DEFAULT,
+       drink_type TEXT DEFAULT 'water',
        notes TEXT,
        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     )
