@@ -1,35 +1,35 @@
-const DAILY_GOAL_LITRES = 2.0;  // THE GOAL TO REACH A DAY
+const DAILY_GOAL_LITRES = 2.0;  // DAILY HYDRATION GOAL
 
 export const getHydrationReminder = (lastTimestamp) => {
   const lastDrink = new Date(lastTimestamp); // THE DATE OF THE LAST TIMESTAMP
-  const now = new Date(); //DATE NOW 
+  const now = new Date(); //DATE AND TIME NOW 
   const hoursSinceLastDrink = (now - lastDrink) / (1000 * 60 * 60);
 
-  if (hoursSinceLastDrink >= 6) {//MESSAGE FOR IF THE HOURS ARE GREATER THAN OR EQUAL TO 6
+  if (hoursSinceLastDrink >= 6) {// FOR HOURS GREATER THAN OR EQUAL TO 6 RETURN AN URGENT WARNING
     return {
       type: 'urgent',
       message: '🚨 URGENT: It\'s been over 6 hours since your last drink! Please hydrate immediately!',
       hoursSince: hoursSinceLastDrink.toFixed(1),
       severity: 'high'
     };
-  } else if (hoursSinceLastDrink >= 4) { //MESSAGE FOR IF THE HOURS ARE GREATER THAN OR EQUAL TO 4
+  } else if (hoursSinceLastDrink >= 4) { // FOR HOURS  GREATER THAN OR EQUAL TO 4 RETURN A WARNING
     return {
       type: 'warning',
-      message: ' WARNING: It\'s been 4-6 hours since your last drink. You should drink water soon!',
+      message: '⚠️ WARNING: It\'s been 4-6 hours since your last drink. You should drink water soon!',
       hoursSince: hoursSinceLastDrink.toFixed(1),
       severity: 'medium'
     };
-  } else if (hoursSinceLastDrink >= 3) { //MESSAGE FOR IF THE HOURS ARE GREATER THAN OR EQUAL TO 3
+  } else if (hoursSinceLastDrink >= 3) { // FOR HOURS GREATER THAN OR EQUAL TO 3 RETURN A GENTLE REMINDER
     return {
       type: 'reminder',
-      message: ' Reminder: It\'s been 3-4 hours since your last drink. Time to hydrate!',
+      message: '💧 Reminder: It\'s been 3-4 hours since your last drink. Time to hydrate!',
       hoursSince: hoursSinceLastDrink.toFixed(1),
       severity: 'low'
     };
-  } else {  //MESSAGE FOR  2 HRS ANDN BELOW
+  } else {  //FOR LESS THAN 3 HOURS USER IS WELL HYDRATED
     return {
       type: 'good',
-      message: ' Great job! You\'re staying hydrated!',
+      message: '✅ Great job! You\'re staying hydrated!',
       hoursSince: hoursSinceLastDrink.toFixed(1),
       severity: 'none'
     };
