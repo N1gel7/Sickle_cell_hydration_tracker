@@ -1,11 +1,11 @@
 import express from 'express'
 import db from '../db/database.js';
-import { getHydrationReminder, calculateDailyProgress } from '../utils/reminders.js';
-
+import { getHydrationReminder, calculateDailyProgress, calculateDailyGoal } from '../utils/reminders.js';
 
 const router = express.Router();
-const DRINK_TYPES = ['water', 'tea', 'coffee', 'juice', 'milk', 'soda', 'sports drink', 'other'];
+const DRINK_TYPES = ['water', 'tea', 'coffee', 'juice', 'milk', 'soda', 'sports drink', 'other'];//Drinks allowed 
 
+//POST REQUEST
 router.post("/" , async(req,res)=>{
     try{
         const{amount_litres,drink_type = 'water',notes} = req.body;
@@ -15,7 +15,7 @@ router.post("/" , async(req,res)=>{
                 error : "Amount in litres is required and must be greater than 0"
             })
         }
-
+        //DISALLOWED IF NOT IN THE ARRAY
      if (!DRINK_TYPES.includes(drink_type)) {
       return res.status(400).json({ 
         error: `Invalid drink type. Must be one of: ${DRINK_TYPES.join(', ')}` 
@@ -28,12 +28,12 @@ router.post("/" , async(req,res)=>{
     `);
 
         const result = str.run(amount_litres, timestamp, drink_type, notes || null);
-
+        //RESPONSE
         res.status(201).json({
             success:true,
             message : "Hydration entry added successfully",
             entry:{
-                id: rresult.lastInsertRowid,
+                id: result.lastInsertRowid, 
                 amount_litres,
                 timestamp,
                 drink_type,
@@ -43,10 +43,10 @@ router.post("/" , async(req,res)=>{
    }
    catch(error){
     console.error("Error adding hydration entry:" , error);
-    res.status(500).json({error: "Filed to add hydration entry"})
+    res.status(500).json({error: "Failed to add hydration entry"})
    }
 })
-
+// GET REQUEST
 router.get("/" , async(req,res)=>{
     try{
       const lastEntry = db.prepare(`
@@ -73,11 +73,12 @@ router.get("/" , async(req,res)=>{
         reminder = getHydrationReminder(lastEntry.timestamp);
     }
     else{
-        reninder = {
+        reminder = {  
             type : "urgent",
             message: 'You haven\'t logged any water intake yet! Start hydrating now!'
         }
     }
+        //RESPONSE
     res.json({
         success : true,
         lastEntry,
@@ -92,3 +93,5 @@ router.get("/" , async(req,res)=>{
         })
     }
 })
+
+export default router;
