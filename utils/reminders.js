@@ -42,3 +42,15 @@ export const calculateDailyProgress = (entries) => {
     count: entries.length
   };
 };
+
+export const calculateDailyGoal = (consumedLitres) => {
+  const remaining = Math.max(0, DAILY_GOAL_LITRES - consumedLitres);
+  const percentage = Math.min(100, (consumedLitres / DAILY_GOAL_LITRES) * 100);
+  
+  return {
+    target: DAILY_GOAL_LITRES,
+    consumed: consumedLitres,
+    remaining: parseFloat(remaining.toFixed(2)),
+    percentage: parseFloat(percentage.toFixed(1))
+  };
+};
